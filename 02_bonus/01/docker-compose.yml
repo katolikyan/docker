@@ -1,0 +1,20 @@
+version: '3.1'
+
+services:
+    
+  db:
+    build: ./db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+    volumes:
+      - /nfs/2018/t/tkatolik/Documents/docker_1/02_bonus/01/databases:/var/lib/mysql
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 6080:8080
+
+# docker-compose up
+# docker-compose rm db // to remove db service/container

@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+
+    web:
+        build: ./web
+        environment:
+            - APACHE_RUN_USER=#1000
+        volumes:
+            - ${APP_PATH_HOST}:${APP_PATH_CONTAINER}
+        ports:
+            - 8080:80
+        working_dir: ${APP_PATH_CONTAINER}
+
+    db:
+        image: mariadb
+        restart: always
+        environment:
+          MYSQL_ROOT_PASSWORD: admin
+        volumes:
+            - ${DB_PATH_HOST}:/var/lib/mysql
+
+    adminer:
+        image: adminer
+        restart: always
+        ports:
+            - 6080:8080
+
+    composer:
+        image: composer:1.6
+        volumes:
+            - ${APP_PATH_HOST}:${APP_PATH_CONTAINER}
+        working_dir: ${APP_PATH_CONTAINER}
+        command: composer install
+
+# to exec commands inside the service we use:
+# docker-compose exec <name_of_the_servise_like_in_yml_file> <command>
+#
+# vendor folder have to be created in blog folder.
+# run bash on web and run php artisan key:generate
+# copy it to .env APP_KEY  
+# create datavase with some <dbname>
+# change .env USERNAME PASS. change  DATABASE as <dbname>

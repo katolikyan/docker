@@ -1,0 +1,8 @@
+# Q:
+# Get the real-time logs of one the tasks of the engineering-bay service.
+
+docker service logs -f $(docker service ps -q -f "name=engineering-bay.1" engineering-bay)
+
+# -f in docker service means filter. filter can be name, id.. any filter that is match table names. 
+# -f in logs means follow (realtime logs).
+# https://docs.docker.com/engine/reference/commandline/service_ps/
